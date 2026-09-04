@@ -1,0 +1,2 @@
+# www -> apex 301（统一权威主机名；www 的 CNAME 与 Pages 绑定保持可用作回源）
+https://www.thebloodof-dawnwalker.wiki/* https://thebloodof-dawnwalker.wiki/:splat 301
