@@ -35,7 +35,7 @@ pages_build_output_dir = "dist"
 
 [vars]
 # Site (must include https:// protocol — Astro validates this as a URL)
-SITE_URL = "https://dawnwalker-wiki.pages.dev"
+SITE_URL = "https://thebloodof-dawnwalker.wiki"
 # Giscus comments (DEMO — anvilwiki.pages.dev points at PNGTRID/AnvilWiki Discussions)
 PUBLIC_GISCUS_REPO = ""
 PUBLIC_GISCUS_REPO_ID = ""

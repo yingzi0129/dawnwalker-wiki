@@ -1,21 +1,13 @@
 {
-  "name": "Anvil Quest Wiki",
-  "short_name": "AQ Wiki",
-  "description": "Complete Anvil Quest wiki with boss guides, codes, and tier lists.",
+  "name": "The Blood of Dawnwalker Wiki",
+  "short_name": "Dawnwalker Wiki",
+  "description": "Complete The Blood of Dawnwalker wiki: boss guides, main quest order, all endings, choices and consequences, court activities, and beginner tips. Updated for every patch.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#f36716",
+  "background_color": "#140b0c",
+  "theme_color": "#c12532",
   "icons": [
-    {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

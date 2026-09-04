@@ -35,7 +35,7 @@ export const site: SiteConfig = {
   shortName: 'Dawnwalker Wiki',
   description:
     'Complete The Blood of Dawnwalker wiki: boss guides, main quest order, all endings, choices and consequences, court activities, and beginner tips. Updated for every patch.',
-  domain: 'dawnwalker-wiki.pages.dev',
+  domain: 'thebloodof-dawnwalker.wiki',
   tagline: 'Every boss. Every choice. Every ending.',
   legalNotice:
     'Dawnwalker Wiki is a fan-made community site. Not affiliated with or endorsed by Rebel Wolves or Bandai Namco Entertainment.',
@@ -62,7 +62,4 @@ export const site: SiteConfig = {
 };
 
 /** Absolute site URL (no trailing slash). Falls back to the Astro `site` config. */
-export const siteUrl: string = (process.env.SITE_URL || `https://${site.domain}`).replace(
-  //$/,
-  '',
-);
+export const siteUrl: string = (process.env.SITE_URL || `https://${site.domain}`).replace(/\/$/, '');
