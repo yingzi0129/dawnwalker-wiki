@@ -46,12 +46,12 @@
   }
 
   .dark {
-    --background: 222 47% 7%;
+    --background: 355 28% 6%;
     --foreground: 210 40% 98%;
-    --muted: 217 33% 14%;
+    --muted: 355 16% 13%;
     --muted-foreground: 215 20% 65%;
-    --border: 217 33% 18%;
-    --card: 222 47% 10%;
+    --border: 355 14% 19%;
+    --card: 355 22% 9%;
     --card-foreground: 210 40% 98%;
   }
 

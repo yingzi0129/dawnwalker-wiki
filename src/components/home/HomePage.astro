@@ -83,14 +83,14 @@ function trendingLabel(link: QuickLink): string {
         without requiring an image asset. Sits behind the watermark. */}
     <div
       aria-hidden="true"
-      class="pointer-events-none absolute inset-0 bg-gradient-to-br from-nav/8 via-transparent to-transparent"
+      class="pointer-events-none absolute inset-0 bg-gradient-to-r from-background via-background/60 to-background/10"
     />
     {/* Official key art backdrop (Steam library asset) — low opacity, sits under the gradient. */}
     <img
       src="/images/hero-bg.webp"
       alt=""
       aria-hidden="true"
-      class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20 dark:opacity-25"
+      class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 dark:opacity-50"
     />
     {/* Faint game-name watermark — pure CSS, no image asset required. */}
     <span
@@ -164,7 +164,15 @@ function trendingLabel(link: QuickLink): string {
                 const parsed = parseEntryId(entry.id);
                 if (!parsed) return null;
                 return (
-                  <a href={detailPath(parsed.category, parsed.slug, locale)} class="card p-4">
+                  <a href={detailPath(parsed.category, parsed.slug, locale)} class="card group overflow-hidden p-4">
+                    {entry.data.image && (
+                      <img
+                        src={entry.data.image.src}
+                        alt={entry.data.title}
+                        loading="lazy"
+                        class="mb-3 aspect-video w-full rounded-md object-cover"
+                      />
+                    )}
                     <p class="text-xs uppercase tracking-wider text-muted-foreground">
                       {parsed.category}
                     </p>

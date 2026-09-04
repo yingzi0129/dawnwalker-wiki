@@ -36,6 +36,8 @@ interface Props {
     description: string;
     href: string;
     displayType: string;
+    /** Optional 16:9 cover image URL shown at the top of the module card. */
+    image?: string;
     // highlights 的字段结构由 displayType 决定(见各子组件 Props),
     // dispatcher 不假设具体字段。类型安全由各子组件内部的 Props
     // interface 保证(JSON 层不参与 TS 检查,见 spec §2.2)。
@@ -52,6 +54,14 @@ const viewAll = sharedStrings.viewAll ?? 'View all';
   {
     modules.map((m) => (
       <a href={localizePath(m.href, locale)} class="card group block overflow-hidden p-5">
+        {m.image && (
+          <img
+            src={m.image}
+            alt={m.name}
+            loading="lazy"
+            class="mb-4 aspect-video w-full rounded-lg object-cover"
+          />
+        )}
         <h3 class="text-lg font-bold leading-snug">{m.name}</h3>
         <p class="mt-1 text-sm text-muted-foreground">{m.description}</p>
 

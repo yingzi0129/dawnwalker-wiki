@@ -136,7 +136,11 @@
       "description": "Your complete guide to The Blood of Dawnwalker. Boss strategies, quest order, all endings, choice consequences, court activities, and everything you need to survive as the Dawnwalker.",
       "ctaPrimary": "Play on Steam",
       "ctaSecondary": "Browse Guides",
-      "videoId": ""
+      "videoId": "bKOVwBBGBds",
+      "videos": [
+        "bKOVwBBGBds",
+        "BnwS1bOPJUo"
+      ]
     },
     "updates": {
       "title": "Recent Updates"
@@ -228,7 +232,8 @@
               "detail": "Sacred Covenant",
               "badge": "Story"
             }
-          ]
+          ],
+          "image": "/images/explore/main-quests.webp"
         },
         {
           "order": 2,
@@ -253,7 +258,8 @@
               "label": "Beast of Balaur",
               "detail": "The monster of the Burrow of Sorrows"
             }
-          ]
+          ],
+          "image": "/images/explore/boss-guides.webp"
         },
         {
           "order": 3,
@@ -278,7 +284,8 @@
               "label": "4",
               "detail": "Lock in your ending — The Turncoat and more"
             }
-          ]
+          ],
+          "image": "/images/explore/endings-choices.webp"
         },
         {
           "order": 4,
@@ -303,7 +310,8 @@
               "label": "C",
               "detail": "Side courts & misc activities"
             }
-          ]
+          ],
+          "image": "/images/explore/court-activities.webp"
         },
         {
           "order": 5,
@@ -317,7 +325,8 @@
               "detail": "The Blood of Dawnwalker launches on PC (Steam) — September 2, 2026",
               "badge": "Launch"
             }
-          ]
+          ],
+          "image": "/images/explore/update-history.webp"
         }
       ]
     },
