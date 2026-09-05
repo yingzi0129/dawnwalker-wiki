@@ -284,10 +284,12 @@ const privacyLabel = footerStrings.privacyPolicy ?? 'Privacy Policy';
         } catch {
           /* storage unavailable */
         }
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (stored === 'dark' || stored === 'black' || (!stored && prefersDark)) {
+        // Default theme is dark (matches the game's tone); an explicit
+        // stored 'light' choice is still honored.
+        if (stored === 'black') {
+          document.documentElement.classList.add('dark', 'black');
+        } else if (stored !== 'light') {
           document.documentElement.classList.add('dark');
-          if (stored === 'black') document.documentElement.classList.add('black');
         }
       })();
     </script>
