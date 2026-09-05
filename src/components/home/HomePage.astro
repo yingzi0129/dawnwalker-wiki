@@ -78,7 +78,7 @@ function trendingLabel(link: QuickLink): string {
   jsonLd={jsonLd}
 >
   {/* ─────────────────────────────── Hero ─────────────────────────────── */}
-  <section class="relative flex min-h-[52vh] items-center overflow-hidden border-b border-border md:min-h-[68vh]">
+  <section class="relative flex aspect-[1920/620] min-h-[430px] items-center overflow-hidden border-b border-border md:min-h-[480px]">
     {/* Subtle theme-color gradient backdrop — gives the hero a visual anchor
         without requiring an image asset. Sits behind the watermark. */}
     <div
@@ -90,7 +90,7 @@ function trendingLabel(link: QuickLink): string {
       src="/images/hero-bg.webp"
       alt=""
       aria-hidden="true"
-      class="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-40 dark:opacity-50"
+      class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 dark:opacity-50"
     />
     {/* Faint game-name watermark — pure CSS, no image asset required. */}
     <span
