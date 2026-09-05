@@ -1,24 +1,22 @@
 ---
 /**
- * StickyBanner — the sticky banner, DESKTOP ONLY by default.
+ * StickyBanner — the sticky banner at the top of every page.
  *
- * Mobile is intentionally excluded (`hidden md:block`): a 320×50 strip stuck
- * under a 56px header permanently eats ~16% of a phone's first screen — the
- * exact bounce-driver UX research flags on ad-heavy wikis. Game wiki traffic
- * is overwhelmingly mobile, and the first screen decides the SEO bounce.
- * Fork users who want mobile sticky anyway: remove `hidden md:block` below.
+ * Responsive dual unit (exactly ONE network renders per slot — mixing banner
+ * networks on one page violates the density red line, docs/ads.md §五):
+ *   - Mobile (<768px):  Adsterra 320×50 (`public/ads/mobile-banner.html`)
+ *   - Desktop (≥768px): AdSense when PUBLIC_ADSENSE_CLIENT + _SLOT_STICKY are
+ *     set, else Adsterra 728×90 (`public/ads/leaderboard.html`)
  *
- * Includes a dismiss button (persisted in localStorage).
+ * Dismiss = THIS VISIT ONLY (sessionStorage): the banner comes back on the
+ * visitor's next browsing session, close button available again — maximizes
+ * impressions while keeping the escape hatch that protects bounce rate and
+ * adblock adoption. (Site owner's call, 2026-09-05; was permanent localStorage
+ * in the upstream template.)
  *
- * TWO mutually exclusive sources — exactly ONE network renders per slot
- * (mixing banner networks on one page violates the density red line,
- * docs/ads.md §五「同一时期,主力广告平台只挂一家」):
- *   1. AdSense — when PUBLIC_ADSENSE_CLIENT + PUBLIC_ADSENSE_SLOT_STICKY
- *      are both set (primary once AdSense approves the site).
- *   2. Adsterra fallback — iframe sandbox isolation, unit script lives in
- *      `public/ads/leaderboard.html`. NEVER paste the atOptions script into
- *      a component: all Adsterra units share the `window.atOptions` global
- *      and would overwrite each other (docs/ads.md 接入节).
+ * Mobile sticky note: a 50px strip under a 56px header eats ~15% of a phone's
+ * first screen — the upstream template excluded mobile deliberately. Enabled
+ * here per site owner, with a Plausible bounce-rate watch as the safety net.
  */
 import { Icon } from 'astro-icon/components';
 import AdSenseSlot from './AdSenseSlot.astro';
@@ -28,9 +26,6 @@ import { isLocale } from '~/i18n/routing';
 const client = import.meta.env.PUBLIC_ADSENSE_CLIENT as string | undefined;
 const slot = import.meta.env.PUBLIC_ADSENSE_SLOT_STICKY as string | undefined;
 const showAdSense = !!(client && slot);
-// Adsterra html ships with the repo, so the slot always has content:
-// AdSense wins when configured, Adsterra fills it until then.
-const show = true;
 const current = Astro.currentLocale;
 const sharedStrings =
   current && isLocale(current)
@@ -39,53 +34,64 @@ const sharedStrings =
 const closeAd = sharedStrings.closeAd ?? 'Close ad';
 ---
 
-{
-  show && (
-    <div
-      id="sticky-banner"
-      class="sticky top-14 z-30 hidden border-b border-border bg-background/95 py-2 backdrop-blur md:block"
+<div
+  id="sticky-banner"
+  class="sticky top-14 z-30 border-b border-border bg-background/95 py-2 backdrop-blur"
+>
+  {/* Mobile — 320×50. min-h reserves the strip height so the ad fill
+      (1–2s after load) doesn't push <main> down (zero CLS). */}
+  <div class="relative mx-auto flex min-h-[50px] items-center justify-center px-4 md:hidden">
+    <iframe
+      src="/ads/mobile-banner.html"
+      width="320"
+      height="50"
+      style="border:0;max-width:100%;"
+      loading="lazy"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      title="Advertisement"
+    />
+    <button
+      type="button"
+      aria-label={closeAd}
+      class="dismiss-sticky-btn absolute -right-1 -top-1 rounded-full border bg-background p-1 text-muted-foreground transition hover:bg-muted"
     >
-      {/* min-h reserves the 728×90 leaderboard height so the ad fill
-          (1–2s after load) doesn't push <main> down — CLS on every page
-          otherwise. Unfilled inventory leaves reserved blank space; that's
-          the accepted trade-off for zero layout shift. The iframe carries
-          fixed width/height attributes, so the reservation is exact. */}
-      <div class="relative mx-auto flex min-h-[90px] max-w-4xl items-center justify-center px-4">
-        {showAdSense ? (
-          <AdSenseSlot position="sticky" class="mx-auto" />
-        ) : (
-          <iframe
-            src="/ads/leaderboard.html"
-            width="728"
-            height="90"
-            style="border:0;max-width:100%;"
-            loading="lazy"
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-            title="Advertisement"
-          />
-        )}
-        <button
-          id="dismiss-sticky"
-          type="button"
-          aria-label={closeAd}
-          class="absolute -right-1 -top-1 rounded-full border bg-background p-1 text-muted-foreground transition hover:bg-muted"
-        >
-          <Icon name="lucide:x" class="h-3 w-3" />
-        </button>
-      </div>
-    </div>
-  )
-}
+      <Icon name="lucide:x" class="h-3 w-3" />
+    </button>
+  </div>
+
+  {/* Desktop — 728×90 leaderboard (min-h reserves height, zero CLS). */}
+  <div class="relative mx-auto hidden min-h-[90px] max-w-4xl items-center justify-center px-4 md:flex">
+    {showAdSense ? (
+      <AdSenseSlot position="sticky" class="mx-auto" />
+    ) : (
+      <iframe
+        src="/ads/leaderboard.html"
+        width="728"
+        height="90"
+        style="border:0;max-width:100%;"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+        title="Advertisement"
+      />
+    )}
+    <button
+      type="button"
+      aria-label={closeAd}
+      class="dismiss-sticky-btn absolute -right-1 -top-1 rounded-full border bg-background p-1 text-muted-foreground transition hover:bg-muted"
+    >
+      <Icon name="lucide:x" class="h-3 w-3" />
+    </button>
+  </div>
+</div>
 <script is:inline>
   (() => {
     const banner = document.getElementById('sticky-banner');
-    const btn = document.getElementById('dismiss-sticky');
-    if (!banner || !btn) return;
+    if (!banner) return;
     // Storage can be blocked (privacy extensions / strict browsers) — degrade
     // to "dismiss works, just not remembered", same pattern as ThemeToggle.
     let dismissed = false;
     try {
-      dismissed = localStorage.getItem('sticky-dismissed') === '1';
+      dismissed = sessionStorage.getItem('sticky-dismissed') === '1';
     } catch {
       /* storage unavailable */
     }
@@ -93,13 +99,15 @@ const closeAd = sharedStrings.closeAd ?? 'Close ad';
       banner.remove();
       return;
     }
-    btn.addEventListener('click', () => {
-      try {
-        localStorage.setItem('sticky-dismissed', '1');
-      } catch {
-        /* storage unavailable */
-      }
-      banner.remove();
+    banner.querySelectorAll('.dismiss-sticky-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        try {
+          sessionStorage.setItem('sticky-dismissed', '1');
+        } catch {
+          /* storage unavailable */
+        }
+        banner.remove();
+      });
     });
   })();
 </script>

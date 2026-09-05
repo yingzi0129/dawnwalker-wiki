@@ -22,6 +22,7 @@ import LocaleLayout from '~/components/layout/LocaleLayout.astro';
 import VideoSection from '~/components/home/VideoSection.astro';
 import QuickStart from '~/components/home/QuickStart.astro';
 import ExploreModules from '~/components/home/ExploreModules.astro';
+import InContentAd from '~/components/ads/InContentAd.astro';
 import { site } from '~/config/site';
 import { NAVIGATION_CONFIG } from '~/config/navigation';
 import { type Locale } from '~/i18n/routing';
@@ -241,6 +242,9 @@ function trendingLabel(link: QuickLink): string {
       </section>
     )
   }
+
+  {/* In-content ad above the final CTA: mid-page, below the fold. */}
+  <InContentAd />
 
   {/* ─────────────────────────────── Final CTA ────────────────────────── */}
   {

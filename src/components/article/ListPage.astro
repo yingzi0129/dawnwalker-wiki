@@ -7,6 +7,7 @@
  */
 import { Icon } from 'astro-icon/components';
 import LocaleLayout from '~/components/layout/LocaleLayout.astro';
+import InContentAd from '~/components/ads/InContentAd.astro';
 import ArticleCover from '~/components/article/ArticleCover.astro';
 import { NAVIGATION_CONFIG } from '~/config/navigation';
 import { type Locale } from '~/i18n/routing';
@@ -119,5 +120,8 @@ const jsonLd = [
         </div>
       )
     }
+
+    <InContentAd />
+    {/* In-content ad below the entry grid. */}
   </div>
 </LocaleLayout>
