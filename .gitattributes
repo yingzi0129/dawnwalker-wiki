@@ -15,3 +15,4 @@
 *.woff binary
 *.woff2 binary
 *.psd binary
+AGENTS.md merge=ours
